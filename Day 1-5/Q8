@@ -1,0 +1,34 @@
+class Solution
+{
+   
+    public int solve(String s,int idx,int n,int[] dp)
+    {
+        if(idx==n)
+        {
+            return 1;
+        }
+        if(s.charAt(idx)=='0')
+        return 0;
+        if(dp[idx]!=-1)
+        return dp[idx];
+        int x=0;
+        int y=0;
+        if(s.charAt(idx)>'0'){
+        x=solve(s,idx+1,n,dp);
+        if(idx+1<n)
+        {
+            if(s.charAt(idx)=='1'||(s.charAt(idx)=='2'&&s.charAt(idx+1)<'7'))
+            y=solve(s,idx+2,n,dp);
+        }
+        }
+        return dp[idx]=(x+y)%1000000007;
+        
+    }
+    public int CountWays(String str)
+    {
+        // code here
+        int dp[] = new int[10001];
+        Arrays.fill(dp,-1);
+        return solve(str,0,str.length(),dp);
+    }
+}
