@@ -1,0 +1,27 @@
+class Solution {
+    public boolean isDivisor(String s,String t)
+    {
+        String a=t;
+        while(t.length()<s.length())
+            t+=a;
+        if(s.equals(t))
+            return true;
+        return false;
+        
+    }
+    public String gcdOfStrings(String str1, String str2) {
+        String res="";
+        int l1=str1.length();
+        int l2=str2.length();
+        for(int i=1;i<=Math.min(l1,l2);i++)
+        {
+            String p1=str1.substring(0,i);
+            String p2=str2.substring(0,i);
+            if(p1.equals(p2)){
+            if(isDivisor(str1,p1)&&isDivisor(str2,p2))
+                res=p1;
+            }
+        }
+        return res;
+    }
+}
