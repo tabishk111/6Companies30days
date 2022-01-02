@@ -1,0 +1,49 @@
+class Solution{
+    static String rep(String s,String nm)
+    {
+        int n = Integer.parseInt(nm);
+        String a = s;
+        while(n-->1)
+        s=s+a;
+        return s;
+        
+    }
+    static String decodedString(String s){
+        // code here
+        Stack<String> st = new Stack<>();
+       // StringBuilder sb = new StringBuilder();
+        for(int i=0;i<s.length();i++)
+        {
+            char c = s.charAt(i);
+            if(Character.isDigit(c))
+            {
+                int num = c-48;
+                int j=i+1;
+                while(Character.isDigit(s.charAt(j)))
+                {
+                    num = (num*10)+(s.charAt(j)-48);
+                    j++;
+                }
+                i=j-1;
+                st.push(Integer.toString(num));
+                continue;
+            }
+            else if(c==']')
+            {
+                StringBuilder sb = new StringBuilder();
+                while(!st.peek().equals("["))
+                sb.insert(0,st.pop());
+                st.pop();
+                String n = st.pop();
+                String repeat = rep(sb.toString(),n);
+                st.push(repeat);
+                
+            }
+            else
+            {
+                st.push(Character.toString(c));
+            }
+        }
+        return st.pop();
+    }
+}
