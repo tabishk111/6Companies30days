@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();//number of elemets ->  n>10
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
+		for(int i=0;i<n;i++)
+		{
+		    int t = sc.nextInt();
+		    if(pq.size()<10)
+		    pq.add(t);
+		    else
+		    {
+		        if(pq.peek()<t)
+		        {
+		            pq.remove();
+		            pq.add(t);
+		        }
+		    }
+		}
+		System.out.println("Maximum 10 numbers are:-");
+		for(int i=0;i<10;i++)
+		System.out.println(pq.remove());
+	}
+}
