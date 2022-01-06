@@ -1,0 +1,107 @@
+class Solution{
+    static class Trie{
+        boolean end;
+        Trie[] child = new Trie[26];
+        Trie(){
+            end=false;
+            Arrays.fill(child,null);
+        }
+    }
+    static class Pair{
+        boolean ex;
+        Trie Tr;
+        Pair(boolean ex,Trie Tr)
+        {
+            this.ex=ex;
+            this.Tr=Tr;
+        }
+    }
+    static void insert(Trie root,String s)
+    {
+        Trie curr=root;
+        for(int i=0;i<s.length();i++)
+        {
+            int p = s.charAt(i)-'a';
+            if(curr.child[p]==null)
+            curr.child[p]=new Trie();
+            curr = curr.child[p];
+        }
+        curr.end=true;
+    }
+    static Pair search(String pre,Trie root,int i,String temp)
+    {
+        if(root==null)
+        return new Pair(false,null);
+        if(pre.length()==i)
+        return new Pair(true,root);
+        temp+=pre.charAt(i);
+        return search(pre,root.child[pre.charAt(i)-'a'],i+1,temp);
+    }
+    static void add(Trie root,String temp, ArrayList<String> arr)
+    {
+        if(root.end==true)
+        {
+            arr.add(temp);
+            for(int i=0;i<26;i++)
+            {
+                if(root.child[i]!=null)
+                {
+                    String p = temp+(char)(97+i);
+                    add(root.child[i],p,arr);
+                }
+            }
+            return;
+        }
+        for(int i=0;i<26;i++)
+            {
+                if(root.child[i]!=null)
+                {
+                    String p = temp+(char)(97+i);
+                    add(root.child[i],p,arr);
+                }
+            }
+        
+    }
+    static ArrayList<ArrayList<String>> displayContacts(int n, 
+                                        String contact[], String s)
+    {
+        // code here
+        ArrayList<ArrayList<String>> res = new ArrayList<>();
+        Trie root = new Trie();
+        for(int j=0;j<n;j++){
+            String st = contact[j];
+            Trie curr=root;
+            for(int i=0;i<st.length();i++)
+            {
+                int p = st.charAt(i)-'a';
+                if(curr.child[p]==null)
+                curr.child[p]=new Trie();
+                curr = curr.child[p];
+            }
+            curr.end=true;
+        }
+        
+        String pre = "";
+        for(int i=0;i<s.length();i++)
+        {
+            pre+=s.charAt(i);
+            String temp="";
+            Pair p = search(pre,root,0,temp);
+            if(p.ex==true)
+            {
+                ArrayList<String> r = new ArrayList<>();
+                //System.out.println(temp);
+                String temp2=pre;
+                add(p.Tr,temp2,r);
+                res.add(r);
+            }
+            else
+            {
+                 ArrayList<String> r = new ArrayList<>();
+                 r.add("0");
+                 res.add(r);
+            }
+        }
+        return res;
+    }
+}
