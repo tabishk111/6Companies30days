@@ -1,0 +1,26 @@
+class Solution {
+    static int solve(int[] a,int i,int k,int[][][] dp,int b)
+    {
+        if(i>=a.length)
+        return 0;
+        if(k<=0)
+        return 0;
+        if(dp[i][k][b]!=-1)
+        return dp[i][k][b];
+        int p=0;
+        p = solve(a,i+1,k,dp,b);
+        if(b==0)
+        p = Math.max(p,solve(a,i+1,k,dp,1)-a[i]);
+        if(b==1&&k>0)
+        p =  Math.max(p,solve(a,i+1,k-1,dp,0)+a[i]);
+        return dp[i][k][b] = p;
+    }
+    static int maxProfit(int K, int N, int A[]) {
+        // code here
+        int[][][] dp = new int[N][K+1][2];
+        for(int[][] r:dp)
+        for(int[]r1:r)
+        Arrays.fill(r1,-1);
+        return solve(A,0,K,dp,0);
+    }
+}
