@@ -1,0 +1,66 @@
+class Solution{
+    static int isValid(int mat[][]){
+        // code here
+        int r = mat.length;
+        int c = mat[0].length;
+        if(r!=9||c!=9)
+        return 0;
+        Set<Integer> hs = new HashSet();
+        for(int i=0;i<9;i++)
+        {
+            hs.clear();
+            for(int j=0;j<9;j++)
+            {
+                int t = mat[i][j];
+                if(t!=0&&hs.contains(t))
+                return 0;
+                hs.add(t);
+            }
+        }
+        for(int i=0;i<9;i++)
+        {
+            hs.clear();
+            for(int j=0;j<9;j++)
+            {
+                int t = mat[j][i];
+                if(t!=0&&hs.contains(t))
+                return 0;
+                hs.add(t);
+            }
+        }
+        for(int i=0;i<9;i+=3)
+        {
+            hs.clear();
+            for(int j=0;j<9;j++)
+            {
+                int t = mat[i][j];
+                if(t!=0&&hs.contains(t))
+                return 0;
+                hs.add(t);
+            }
+        }
+        r=0;
+        c=0;
+        for(int k=1;k<=9;k++)
+        {
+            hs.clear();
+            for (int i = 0; i < 3; i++)
+            {
+                for(int j = 0; j < 3; j++)
+                {
+                    int t = mat[r+i][c+j];
+                    if (t!=0&&hs.contains(t))
+                        return 0;
+                    hs.add(t);
+                }
+            }
+            r +=3;
+            if (r==9)
+            {
+                r = 0;
+                c +=3;
+            }
+        }
+        return 1;
+    }
+}
