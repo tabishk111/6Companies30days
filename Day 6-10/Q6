@@ -1,0 +1,27 @@
+class Solution
+{
+    //Function to find maximum of each subarray of size k.
+    static ArrayList <Integer> max_of_subarrays(int arr[], int n, int k)
+    {
+        // Your code here
+        ArrayList<Integer> res = new ArrayList<>();
+        Deque<Integer> dq = new ArrayDeque<>();
+        int i=0;
+        int j=0;
+        while(j<n)
+        {
+            while(!dq.isEmpty()&&dq.getLast()<arr[j])
+            dq.removeLast();
+            dq.addLast(arr[j]);
+            if((j-i+1)==k)
+            {
+                res.add(dq.getFirst());
+                if(dq.getFirst()==arr[i])
+                dq.removeFirst();
+                i++;
+            }
+            j++;
+        }
+        return res;
+    }
+}
