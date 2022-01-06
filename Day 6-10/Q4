@@ -1,0 +1,63 @@
+class Solution{
+    static class Pair{
+        int cost;
+        String str;
+        Pair(int cost,String str)
+        {
+            this.cost = cost;
+            this.str = str;
+        }
+    }
+    public static String getStr(String s1,String s2)
+    {
+        return "("+s1+s2+")";
+    }
+    public static Pair solve(int[] a,int i,int j,Pair[][] dp)
+    {
+        if(j-i==2)
+        {
+            char c1 = (char)(65+i);
+            char c2 = (char)(65+j-1);
+            String str = getStr(Character.toString(c1),Character.toString(c2));
+            int cost = a[i]*a[i+1]*a[j];
+            return new Pair(cost,str);
+        }
+        if(dp[i][j]!=null)
+        return dp[i][j];
+        int res = Integer.MAX_VALUE;
+        String l = Character.toString((char)(i+65));
+        String r = Character.toString((char)(j+65-1));
+        String tl;String tr;String sres="";
+        for(int k=i+1;k<j;k++)
+        {
+            tl=l;tr=r;
+            int temp = 0;
+            if(k-i>=2)
+            {
+                Pair t = solve(a,i,k,dp);
+                temp +=t.cost;
+                tl = t.str;
+            }
+            if(j-k>=2)
+            {
+                Pair t = solve(a,k,j,dp);
+                temp +=t.cost;
+                tr = t.str;
+            }
+            temp+= a[i]*a[k]*a[j];
+            if(temp<res)
+            {
+                res=temp;
+                sres = getStr(tl,tr);
+            }
+        }
+        return dp[i][j] = new Pair(res,sres);
+    }
+    static String matrixChainOrder(int p[], int n){
+        if(p.length == 2)
+		    return "A";
+        Pair[][] dp = new Pair[n][n];
+        Pair res = solve(p,0,n-1,dp);
+        return res.str;
+    }
+}
