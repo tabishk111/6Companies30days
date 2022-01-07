@@ -1,0 +1,63 @@
+class Solution
+{
+    /*class Node {
+    	int data;
+    	Node left;
+    	Node right;
+    
+    	Node(int data) {
+    		this.data = data;
+    		left = null;
+    		right = null;
+    	}
+    }*/
+    static Node tar;
+    public static void findPar(Node root,Node par,Map<Node,Node> hm,int t)
+    {
+        if(root==null)
+        return;
+        hm.put(root,par);
+        if(root.data==t)
+        tar=root;
+        findPar(root.left,root,hm,t);
+        findPar(root.right,root,hm,t);
+    }
+    public static int minTime(Node root, int t) 
+    {
+        // Your code goes here
+        tar=null;
+        HashMap<Node,Node> hm = new HashMap<>();
+        findPar(root,null,hm,t);
+        int res=-1;
+        Queue<Node> q = new LinkedList<>();
+        Set<Node> s = new HashSet<>();
+        q.add(tar);
+        s.add(tar);
+        while(!q.isEmpty())
+        {
+            int size = q.size();
+            while(size-->0)
+            {
+                Node curr = q.remove();
+                if(curr.left!=null&&!s.contains(curr.left))
+                {
+                    q.add(curr.left);
+                    s.add(curr.left);
+                }
+                if(curr.right!=null&&!s.contains(curr.right))
+                {
+                    q.add(curr.right);
+                    s.add(curr.right);
+                }
+                if(hm.get(curr)!=null&&!s.contains(hm.get(curr)))
+                {
+                    q.add(hm.get(curr));
+                    s.add(hm.get(curr));
+                }
+                
+            }
+            res++;
+        }
+        return res;
+    }
+}
