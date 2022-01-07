@@ -1,0 +1,25 @@
+class Solution
+{
+    StringBuilder sb;
+    void solve(long n)
+    {
+        if(n<=26)
+        {
+            char c = (char)((int)n+64);
+            sb.append(c);
+            return;
+        }
+        solve((n-1)/26);
+        if(n%26==0)
+            sb.append((char)(26+64));
+        else
+            sb.append((char)((int)n%26+64));
+    }
+    String colName (long n)
+    {
+        // your code here
+        sb=new StringBuilder();
+        solve(n);
+        return sb.toString();
+    }
+}
