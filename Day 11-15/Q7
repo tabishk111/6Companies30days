@@ -1,0 +1,50 @@
+class Solution
+{
+    static int dx[] = {1,-1,0,0,1,1,-1,-1};
+    static int dy[] = {0,0,1,-1,1,-1,1,-1};
+    static int c=0;
+    static int max=Integer.MIN_VALUE;
+    public static boolean isValid(int x,int y,int n,int m,int grid[][],int vis[][])
+    {
+        if(x<0||x>=n||y<0||y>=m)
+        return false;
+        if(grid[x][y]==0||vis[x][y]==1)
+        return false;
+        return true;
+    }
+    public static void dfs(int x,int y,int n,int m,int grid[][],int vis[][])
+    {
+        vis[x][y]=1;
+        c++;
+        
+        for(int i =0;i<8;i++)
+        {
+            if(isValid(x+dx[i],y+dy[i],n,m,grid,vis))
+            dfs(x+dx[i],y+dy[i],n,m,grid,vis);
+        }
+    }
+    public int findMaxArea(int[][] grid)
+    {
+        // Code here
+        int n = grid.length;
+        int m = grid[0].length;
+        int vis[][] = new int[n][m];
+        for(int i =0;i<n;i++)
+        for(int j =0;j<m;j++)
+        vis[i][j]=0;
+        int max=Integer.MIN_VALUE;
+        for(int i =0;i<n;i++)
+        {
+            for(int j =0;j<m;j++)
+            {
+                if(grid[i][j]==1&&vis[i][j]==0)
+                {
+                    c=0;
+                    dfs(i,j,n,m,grid,vis);
+                    max=Math.max(c,max);
+                }
+            }
+        }
+        return max;
+    }
+}
