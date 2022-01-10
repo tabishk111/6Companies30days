@@ -1,0 +1,27 @@
+class Solution
+{
+    //Function to find list of all words possible by pressing given numbers.
+    static char[][] keypad = {{}, {}, {'a', 'b', 'c'}, {'d', 'e', 'f'},
+        {'g', 'h', 'i'}, {'j', 'k', 'l'}, {'m', 'n', 'o'},
+        {'p', 'q', 'r', 's'}, {'t', 'u', 'v'}, {'w', 'x', 'y', 'z'}};
+    
+    static void recurr(int a[], int index, String currentString, ArrayList<String> res) {
+        
+        if (index == a.length) {
+            res.add(currentString);
+            return;
+        }
+        
+        for (char c : keypad[a[index]]) {
+            recurr(a, index + 1, currentString + c, res);
+        }
+        
+    }
+    static ArrayList <String> possibleWords(int a[], int N)
+    {
+        // your code here  
+        ArrayList<String> res = new ArrayList<String>();
+        recurr(a, 0, "", res);
+        return res;
+    }
+}
