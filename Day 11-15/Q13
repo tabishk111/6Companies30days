@@ -1,0 +1,32 @@
+class Solution
+{
+    //Function to find if the given edge is a bridge in graph.
+    static void dfs(int n,ArrayList<ArrayList<Integer>> adj,int[] vis)
+    {
+       // set.add(n);
+        vis[n]=1;
+        for(int i=0;i<adj.get(n).size();i++)
+        {
+            int c = adj.get(n).get(i);
+            if(vis[c]==-1)
+            dfs(c,adj,vis);
+        }
+    }
+    static int isBridge(int V, ArrayList<ArrayList<Integer>> adj,int c,int d)
+    {
+        // code here
+        int[] vis = new int[V+1];
+        Arrays.fill(vis,-1);
+        dfs(c,adj,vis);
+        adj.get(c).remove(new Integer(d));
+        adj.get(d).remove(new Integer(c));
+        //Set<Integer> set = new HashSet();
+        int[] vis2 = new int[V+1];
+        Arrays.fill(vis2,-1);
+        dfs(c,adj,vis2);
+        for(int i=0;i<=V;i++)
+        if(vis[i]!=vis2[i])
+        return 1;
+        return 0;
+    }
+}
