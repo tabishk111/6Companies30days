@@ -1,0 +1,22 @@
+class Solution {
+    List<String> res;
+    public void solve(int o,int c,String ip,int n){
+        if(o==c&&o==n){
+            res.add(ip);
+            return;
+        }
+        if(o>n||c>n)
+        return;
+        if(o<n)
+        solve(o+1,c,ip+"(",n);
+        if(o>c&&c<n)
+        solve(o,c+1,ip+")",n);
+    }
+    public List<String> AllParenthesis(int n) 
+    {
+        // Write your code here
+        res = new ArrayList<>();
+        solve(0,0,"",n);
+        return res;
+    }
+}
