@@ -1,0 +1,22 @@
+class Solution{
+    long m = 1000000007;
+    long[][] dp = new long[1001][1001];
+    public long solve(int n,int k,int c){
+        if(n==0)
+            return 1l;
+        if(dp[n][c]!=-1)
+        return dp[n][c];
+        
+        if(c<k)
+        return dp[n][c] = (21*solve(n-1,k,0)%m+5*solve(n-1,k,c+1)%m)%m;
+        
+        return dp[n][c] = 21*solve(n-1,k,0)%m;
+    } 
+    public int kvowelwords(int N,int K){
+        // code here
+        for(long[] r:dp)
+        Arrays.fill(r,-1);
+        long res = solve(N,K,0);
+        return (int)(res%m);
+    }
+}
