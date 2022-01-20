@@ -1,0 +1,27 @@
+class Solution
+{
+    //Function to return the name of candidate that received maximum votes.
+    public static String[] winner(String arr[], int n)
+    {
+        // add your code
+        int mx=0;
+        TreeMap<String,Integer> tm = new TreeMap<>();
+        for(String s:arr){
+            tm.put(s,tm.getOrDefault(s,0)+1);
+            mx = Math.max(mx,tm.get(s));
+        }
+        String res="";
+        for(Map.Entry<String,Integer> enter: tm.entrySet()){
+            int val = enter.getValue();
+            if(val==mx){
+                res = enter.getKey();
+                break;
+            }
+        }
+        String[] ans = new String[2];
+        ans[0]=res;
+        ans[1]=Integer.toString(mx);
+        return ans;
+    }
+}
+
