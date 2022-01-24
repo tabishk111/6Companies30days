@@ -1,0 +1,32 @@
+class Solution {
+    public boolean isValid(int[] piles,int m,int h){
+        int r=0;
+        for(int i=0;i<piles.length;i++){
+            int d = piles[i]/m;
+            r+=d;
+            if(piles[i]%m!=0)
+                r++;
+        }
+        if(r<=h)
+            return true;
+        return false;
+    }
+    public int minEatingSpeed(int[] piles, int h) {
+        int sum=0;
+        for(int x:piles)
+            sum=Math.max(sum,x);
+        int l=1;
+        int res=1;
+        while(l<=sum){
+            int m = l+(sum-l)/2;
+            if(isValid(piles,m,h))
+            {
+                res=m;
+                sum=m-1;
+            }
+            else
+                l=m+1;
+        }
+        return res;
+    }
+}
