@@ -1,0 +1,36 @@
+class Solution {
+    public void dfs(int[][] arr, boolean[][] vis,int x,int y,int h){
+        if(x<0||y<0||x>=arr.length||y>=arr[0].length||vis[x][y]||h>arr[x][y])
+            return;
+        vis[x][y]=true;
+        dfs(arr,vis,x+1,y,arr[x][y]);
+        dfs(arr,vis,x-1,y,arr[x][y]);
+        dfs(arr,vis,x,y+1,arr[x][y]);
+        dfs(arr,vis,x,y-1,arr[x][y]);
+    }
+    public List<List<Integer>> pacificAtlantic(int[][] arr) {
+        int n = arr.length;
+        int m = arr[0].length;
+        boolean[][] pvis = new boolean[n][m];
+        boolean[][] avis = new boolean[n][m];
+        for(int i=0;i<n;i++){
+            dfs(arr,pvis,i,0,Integer.MIN_VALUE);
+            dfs(arr,avis,i,m-1,Integer.MIN_VALUE);
+        }
+        for(int i=0;i<m;i++){
+            dfs(arr,pvis,0,i,Integer.MIN_VALUE);
+            dfs(arr,avis,n-1,i,Integer.MIN_VALUE);
+        }
+        List<List<Integer>> res = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(pvis[i][j]==true && avis[i][j]==true){
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(i);temp.add(j);
+                    res.add(temp);
+                }
+            }
+        }
+        return res;
+    }
+}
